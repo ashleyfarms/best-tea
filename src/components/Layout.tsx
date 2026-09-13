@@ -79,6 +79,9 @@ export function Layout() {
           </a>
         </p>
         <HelpPalLink />
+        <p className="help-pal-link">
+          <Link to="/privacy">Privacy</Link>
+        </p>
         <p className="site-footer__fine">
           © {new Date().getFullYear()} Best Tea · Help-Pal
         </p>

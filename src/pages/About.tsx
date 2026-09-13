@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { PossJonah } from '../components/PossJonah';
 import { HelpPalLink } from '../components/HelpPalLink';
 
@@ -29,6 +30,10 @@ export function About() {
           Best Tea is free, user-driven, and positivity-only. Hunt the best
           glass by city, cheer your favorites, and nominate spots you love —
           no worst lists, no subscriptions.
+        </p>
+        <p>
+          See our <Link to="/privacy">Privacy Policy</Link> for how nominations,
+          votes, and ads are handled.
         </p>
         <HelpPalLink />
       </div>

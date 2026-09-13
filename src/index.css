@@ -1037,7 +1037,8 @@ a.how-step:focus-visible {
   font-weight: 600;
 }
 
-.about .prose {
+.about .prose,
+.privacy .prose {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -1045,18 +1046,26 @@ a.how-step:focus-visible {
   box-shadow: var(--shadow);
 }
 
-.about .prose h2 {
+.about .prose h2,
+.privacy .prose h2 {
   margin: 1.5rem 0 0.5rem;
   font-size: 1.3rem;
   letter-spacing: -0.02em;
   color: var(--brown-ink);
 }
 
-.about .prose ul {
+.about .prose ul,
+.privacy .prose ul {
   padding-left: 1.2rem;
   color: var(--brown-ink);
   font-size: 1.15rem;
   line-height: 1.65;
+}
+
+.privacy-updated {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted, #6b5b4a);
 }
 
 /* Quiet ads — game first */

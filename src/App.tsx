@@ -5,6 +5,7 @@ import { Cities } from './pages/Cities';
 import { CityPage } from './pages/CityPage';
 import { Home } from './pages/Home';
 import { Nominate } from './pages/Nominate';
+import { Privacy } from './pages/Privacy';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="city/:cityId" element={<CityPage />} />
           <Route path="nominate" element={<Nominate />} />
           <Route path="about" element={<About />} />
+          <Route path="privacy" element={<Privacy />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
