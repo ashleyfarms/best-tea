@@ -6,16 +6,10 @@
 [functions]
   node_bundler = "esbuild"
 
-# Shared places API (Neon) — must force ahead of SPA fallback
+# Shared places API (Neon) — force ahead of SPA fallback
 [[redirects]]
-  from = "/api/places"
-  to = "/.netlify/functions/places"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/places/:id/upvote"
-  to = "/.netlify/functions/upvote?id=:id"
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
   status = 200
   force = true
 

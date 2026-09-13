@@ -1,4 +1,28 @@
-import { getSql, json, mapPlace } from './_db.mjs';
+import { getSql, json, mapPlace } from './lib/db.mjs';
+
+function extractPlaceId(event) {
+  const q = event.queryStringParameters || {};
+  if (q.id) return String(q.id);
+
+  const candidates = [
+    event.path,
+    event.rawUrl,
+    event.headers?.['x-original-path'],
+    event.headers?.['x-forwarded-url'],
+    event.headers?.referer,
+  ].filter(Boolean);
+
+  for (const c of candidates) {
+    const m = String(c).match(
+      /\/places\/([^/?#]+)\/upvote|/upvote\/([^/?#]+)/,
+    );
+    if (m) return decodeURIComponent(m[1] || m[2]);
+  }
+
+  // Netlify may pass splat / path segments
+  if (event.pathParameters?.id) return String(event.pathParameters.id);
+  return '';
+}
 
 export async function handler(event) {
   try {
@@ -6,12 +30,16 @@ export async function handler(event) {
       return json(405, { error: 'Method not allowed' });
     }
 
-    const id =
-      event.queryStringParameters?.id ||
-      event.pathParameters?.id ||
-      '';
+    const id = extractPlaceId(event);
     if (!id) {
-      return json(400, { error: 'place id is required' });
+      return json(400, {
+        error: 'place id is required',
+        debug: {
+          path: event.path,
+          rawUrl: event.rawUrl,
+          query: event.queryStringParameters || null,
+        },
+      });
     }
 
     const sql = getSql();
