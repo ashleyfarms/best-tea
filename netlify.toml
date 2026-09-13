@@ -1,6 +1,23 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Shared places API (Neon) — must force ahead of SPA fallback
+[[redirects]]
+  from = "/api/places"
+  to = "/.netlify/functions/places"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/places/:id/upvote"
+  to = "/.netlify/functions/upvote?id=:id"
+  status = 200
+  force = true
 
 # SPA fallback for react-router
 [[redirects]]

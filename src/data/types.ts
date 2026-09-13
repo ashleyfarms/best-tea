@@ -1,4 +1,4 @@
-/** Shared place + vote types. Swap LocalStore for Netlify Function + Neon later. */
+/** Shared place + vote types. Neon-backed via Netlify Functions. */
 
 export type CityId = string;
 
@@ -28,11 +28,10 @@ export interface NominateInput {
   note?: string;
 }
 
-/** Data-store contract — implement with localStorage now, Neon later */
+/** Data-store contract — API-backed places; localStorage vote locks only */
 export interface PlaceStore {
-  listByCity(cityId: CityId): Place[];
-  getPlace(id: string): Place | undefined;
-  nominate(input: NominateInput): Place;
-  upvote(placeId: string): { place: Place; alreadyVoted: boolean };
+  listByCity(cityId: CityId): Promise<Place[]>;
+  nominate(input: NominateInput): Promise<Place>;
+  upvote(placeId: string): Promise<{ place: Place; alreadyVoted: boolean }>;
   hasVoted(placeId: string): boolean;
 }

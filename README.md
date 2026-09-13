@@ -38,7 +38,7 @@ npm run preview  # preview the build
 3. Publish directory: `dist`
 4. `netlify.toml` already sets SPA redirects (`/* → /index.html`).
 
-No secrets required for the localStorage demo.
+Set `DATABASE_URL` (Neon) on the Netlify site for shared nominations.
 
 ## What’s in the MVP
 
@@ -54,21 +54,21 @@ Also: header + in-feed **AdSense placeholder** slots, upvote with **localStorage
 
 Memphis ships with 2–3 **example** places so the list isn’t empty on first load.
 
-## Data layer (v1 → Neon)
+## Data layer (shared Neon)
 
 - Types & contract: `src/data/types.ts` (`PlaceStore`)
 - Cities: `src/data/cities.ts`
-- Seed examples: `src/data/seed.ts`
-- Implementation: `src/data/store.ts` (localStorage)
+- Seed examples: `src/data/seed.ts` + SQL seed in `sql/001_best_tea_places.sql`
+- Frontend store: `src/data/store.ts` (API-backed; localStorage **vote locks only**)
+- API: Netlify Functions `netlify/functions/places.mjs` + `upvote.mjs`
+- Tables: `best_tea_places`, optional `best_tea_vote_locks` (prefixed so other Neon apps stay safe)
 
-**Multi-user shared votes need a backend next.** Today each browser keeps its own places + vote locks. To sync across users:
+```bash
+# Apply schema (needs DATABASE_URL)
+npm run migrate
+```
 
-1. Add a Netlify Function (or Blobs) that reads/writes places.
-2. Point a Neon Postgres table at the same `Place` shape (`id`, `cityId`, `name`, `address`, `note`, `votes`, `createdAt`).
-3. Keep the `PlaceStore` interface; swap `localStore` for an API-backed store.
-4. Vote lock can move to signed cookies / accounts later; for anonymous sync, use IP+place hashing carefully or require light accounts.
-
-Optional simple Blobs path (no Neon): store a JSON blob of places; still needs a Function write path and won’t prevent double-voting without extra checks.
+Env on Netlify: `DATABASE_URL` (Neon). Places are shared across all visitors; one-cheer-per-browser still uses localStorage.
 
 ## Add a city
 
@@ -94,8 +94,7 @@ Replace the placeholder markup with your AdSense (or other) unit when you have a
 - Food verticals (best biscuits, best BBQ sauce, etc.) under the Poss Jonah voice
 - Physical plaques / window stickers for top spots
 - Market-research B2B (anonymized popularity signals by city)
-- Optional accounts for cross-device vote sync
-- Real shared backend (Netlify Functions + Neon)
+- Optional accounts for stronger vote sync
 - Custom logo for Poss Jonah
 
 ## Domain ideas

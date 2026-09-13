@@ -1,30 +1,6 @@
 import type { NominateInput, Place, PlaceStore } from './types';
-import { SEED_PLACES } from './seed';
 
-const PLACES_KEY = 'best-tea:places:v1';
 const VOTES_KEY = 'best-tea:votes:v1';
-
-function readPlaces(): Place[] {
-  try {
-    const raw = localStorage.getItem(PLACES_KEY);
-    if (!raw) {
-      localStorage.setItem(PLACES_KEY, JSON.stringify(SEED_PLACES));
-      return [...SEED_PLACES];
-    }
-    const parsed = JSON.parse(raw) as Place[];
-    if (!Array.isArray(parsed) || parsed.length === 0) {
-      localStorage.setItem(PLACES_KEY, JSON.stringify(SEED_PLACES));
-      return [...SEED_PLACES];
-    }
-    return parsed;
-  } catch {
-    return [...SEED_PLACES];
-  }
-}
-
-function writePlaces(places: Place[]): void {
-  localStorage.setItem(PLACES_KEY, JSON.stringify(places));
-}
 
 function readVoteSet(): Set<string> {
   try {
@@ -41,76 +17,80 @@ function writeVoteSet(set: Set<string>): void {
   localStorage.setItem(VOTES_KEY, JSON.stringify([...set]));
 }
 
-function newId(): string {
-  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
-    return crypto.randomUUID();
+function markVoted(placeId: string): void {
+  const votes = readVoteSet();
+  votes.add(placeId);
+  writeVoteSet(votes);
+}
+
+async function parseError(res: Response): Promise<string> {
+  try {
+    const data = (await res.json()) as { error?: string };
+    if (data?.error) return data.error;
+  } catch {
+    /* ignore */
   }
-  return `p-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  return `Request failed (${res.status})`;
 }
 
 /**
- * v1: browser-local store (works offline / Netlify static demo).
- * Later: replace with Netlify Function + Neon implementing the same PlaceStore shape.
- *
- * Multi-user shared votes are NOT synced across browsers yet — see README.
+ * Shared Neon-backed store via Netlify Functions.
+ * localStorage is ONLY used for one-cheer-per-browser UX locks.
  */
-export const localStore: PlaceStore = {
-  listByCity(cityId) {
-    return readPlaces()
-      .filter((p) => p.cityId === cityId)
-      .sort((a, b) => b.votes - a.votes || a.name.localeCompare(b.name));
+export const apiStore: PlaceStore = {
+  async listByCity(cityId) {
+    const res = await fetch(
+      `/api/places?cityId=${encodeURIComponent(cityId)}`,
+    );
+    if (!res.ok) throw new Error(await parseError(res));
+    const data = (await res.json()) as { places: Place[] };
+    return Array.isArray(data.places) ? data.places : [];
   },
 
-  getPlace(id) {
-    return readPlaces().find((p) => p.id === id);
-  },
-
-  nominate(input: NominateInput): Place {
+  async nominate(input: NominateInput): Promise<Place> {
     const name = input.name.trim();
     if (!name) throw new Error('Place name is required');
     if (!input.cityId) throw new Error('City is required');
 
-    const place: Place = {
-      id: newId(),
-      cityId: input.cityId,
-      name,
-      address: input.address?.trim() || undefined,
-      note: input.note?.trim() || undefined,
-      votes: 1,
-      isExample: false,
-      createdAt: new Date().toISOString(),
-    };
-
-    const places = readPlaces();
-    places.push(place);
-    writePlaces(places);
-
-    // Nominator's first upvote is locked in
-    const votes = readVoteSet();
-    votes.add(place.id);
-    writeVoteSet(votes);
-
-    return place;
+    const res = await fetch('/api/places', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        cityId: input.cityId,
+        name,
+        address: input.address?.trim() || undefined,
+        note: input.note?.trim() || undefined,
+      }),
+    });
+    if (!res.ok) throw new Error(await parseError(res));
+    const data = (await res.json()) as { place: Place };
+    // Nominator's first upvote is locked in locally
+    markVoted(data.place.id);
+    return data.place;
   },
 
-  upvote(placeId) {
-    const votes = readVoteSet();
-    if (votes.has(placeId)) {
-      const place = readPlaces().find((p) => p.id === placeId);
-      if (!place) throw new Error('Place not found');
-      return { place, alreadyVoted: true };
+  async upvote(placeId) {
+    if (readVoteSet().has(placeId)) {
+      return {
+        place: {
+          id: placeId,
+          cityId: '',
+          name: '',
+          votes: 0,
+          createdAt: new Date().toISOString(),
+        },
+        alreadyVoted: true,
+      };
     }
 
-    const places = readPlaces();
-    const idx = places.findIndex((p) => p.id === placeId);
-    if (idx < 0) throw new Error('Place not found');
-
-    places[idx] = { ...places[idx], votes: places[idx].votes + 1 };
-    writePlaces(places);
-    votes.add(placeId);
-    writeVoteSet(votes);
-
-    return { place: places[idx], alreadyVoted: false };
+    const res = await fetch(
+      `/api/places/${encodeURIComponent(placeId)}/upvote`,
+      { method: 'POST' },
+    );
+    if (!res.ok) throw new Error(await parseError(res));
+    const data = (await res.json()) as { place: Place };
+    markVoted(placeId);
+    return { place: data.place, alreadyVoted: false };
   },
 
   hasVoted(placeId) {
@@ -118,7 +98,6 @@ export const localStore: PlaceStore = {
   },
 };
 
-/** Hook-friendly helpers that trigger re-renders via version bump */
 export function getStore(): PlaceStore {
-  return localStore;
+  return apiStore;
 }

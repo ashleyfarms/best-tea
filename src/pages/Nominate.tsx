@@ -16,6 +16,7 @@ export function Nominate() {
   const [address, setAddress] = useState('');
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const [doneCityId, setDoneCityId] = useState<string | null>(null);
   const [doneName, setDoneName] = useState('');
 
@@ -29,7 +30,7 @@ export function Nominate() {
 
   const doneCity = doneCityId ? getCity(doneCityId) : undefined;
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
     const trimmed = name.trim();
@@ -46,8 +47,9 @@ export function Nominate() {
       return;
     }
 
+    setSubmitting(true);
     try {
-      const place = store.nominate({
+      const place = await store.nominate({
         cityId,
         name: trimmed,
         address,
@@ -57,6 +59,8 @@ export function Nominate() {
       setDoneName(place.name);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not save nomination.');
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -103,7 +107,7 @@ export function Nominate() {
         </p>
       </header>
 
-      <form className="form" onSubmit={onSubmit} noValidate>
+      <form className="form" onSubmit={(e) => void onSubmit(e)} noValidate>
         <label className="field">
           <span className="field__label">Which town? *</span>
           <select
@@ -167,8 +171,13 @@ export function Nominate() {
         ) : null}
 
         <div className="cta-row">
-          <button type="submit" className="btn btn--primary">
-            <TeaGlass size={22} className="btn__tea" /> Add to the board
+          <button
+            type="submit"
+            className="btn btn--primary"
+            disabled={submitting}
+          >
+            <TeaGlass size={22} className="btn__tea" />{' '}
+            {submitting ? 'Saving…' : 'Add to the board'}
           </button>
           <Link to={cityId ? `/city/${cityId}` : '/cities'} className="btn btn--ghost">
             Cancel

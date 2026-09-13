@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AdSlot } from '../components/AdSlot';
 import { PlaceCard } from '../components/PlaceCard';
@@ -20,7 +20,9 @@ export function CityPage() {
   const { cityId = '' } = useParams();
   const city = getCity(cityId);
   const store = getStore();
-  const [tick, setTick] = useState(0);
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
   const [toast, setToast] = useState({ visible: false, message: '' });
   const firstVoteRef = useRef(
     typeof sessionStorage !== 'undefined'
@@ -29,11 +31,29 @@ export function CityPage() {
   );
   const toastTimer = useRef<number | null>(null);
 
-  const places: Place[] = useMemo(() => {
-    void tick;
-    if (!city) return [];
-    return store.listByCity(city.id);
-  }, [city, store, tick]);
+  const refresh = useCallback(async () => {
+    if (!city) {
+      setPlaces([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setLoadError('');
+    try {
+      const list = await store.listByCity(city.id);
+      setPlaces(list);
+    } catch (err) {
+      setLoadError(
+        err instanceof Error ? err.message : 'Could not load places.',
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, [city, store]);
+
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
 
   const showToast = useCallback((message: string) => {
     if (toastTimer.current) window.clearTimeout(toastTimer.current);
@@ -44,27 +64,42 @@ export function CityPage() {
   }, []);
 
   const onUpvote = useCallback(
-    (placeId: string) => {
-      const result = store.upvote(placeId);
-      setTick((t) => t + 1);
-      if (result.alreadyVoted) return;
-
-      if (firstVoteRef.current) {
-        firstVoteRef.current = false;
-        try {
-          sessionStorage.setItem('best-tea:first-cheer', '1');
-        } catch {
-          /* ignore */
+    async (placeId: string) => {
+      try {
+        const result = await store.upvote(placeId);
+        if (result.alreadyVoted) {
+          await refresh();
+          return;
         }
-        showToast('First cheer of the day — Poss Jonah is proud!');
-      } else {
-        const msg =
-          VOTE_TOASTS[Math.floor(Math.random() * VOTE_TOASTS.length)] ??
-          VOTE_TOASTS[0];
-        showToast(msg);
+        // Optimistic: bump local list with returned place
+        setPlaces((prev) =>
+          [...prev]
+            .map((p) => (p.id === result.place.id ? result.place : p))
+            .sort((a, b) => b.votes - a.votes || a.name.localeCompare(b.name)),
+        );
+
+        if (firstVoteRef.current) {
+          firstVoteRef.current = false;
+          try {
+            sessionStorage.setItem('best-tea:first-cheer', '1');
+          } catch {
+            /* ignore */
+          }
+          showToast('First cheer of the day — Poss Jonah is proud!');
+        } else {
+          const msg =
+            VOTE_TOASTS[Math.floor(Math.random() * VOTE_TOASTS.length)] ??
+            VOTE_TOASTS[0];
+          showToast(msg);
+        }
+      } catch (err) {
+        showToast(
+          err instanceof Error ? err.message : 'Could not record cheer.',
+        );
+        await refresh();
       }
     },
-    [store, showToast],
+    [store, showToast, refresh],
   );
 
   if (!city) {
@@ -107,7 +142,18 @@ export function CityPage() {
         </div>
       </header>
 
-      {places.length === 0 ? (
+      {loading ? (
+        <p className="lede">Pouring the list…</p>
+      ) : loadError ? (
+        <div className="empty">
+          <p className="lede" role="alert">
+            {loadError}
+          </p>
+          <button type="button" className="btn btn--primary" onClick={() => void refresh()}>
+            Try again
+          </button>
+        </div>
+      ) : places.length === 0 ? (
         <div className="empty">
           <PossJonah moment="empty" />
           <Link
@@ -128,7 +174,9 @@ export function CityPage() {
                 place={place}
                 rank={i + 1}
                 hasVoted={store.hasVoted(place.id)}
-                onUpvote={onUpvote}
+                onUpvote={(id) => {
+                  void onUpvote(id);
+                }}
               />
             </li>
           ))}
