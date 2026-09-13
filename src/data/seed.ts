@@ -17,7 +17,7 @@ export const SEED_PLACES: Place[] = [
     cityId: 'memphis-tn',
     name: "Arnold's Country Kitchen (spirit)",
     address: 'Downtown Memphis area favorite style',
-    note: 'Classic Southern glass — amber, sweet, and proud. Example entry for Poss Jonah fans.',
+    note: 'Classic Southern glass — amber, sweet, and proud.',
     votes: 9,
     isExample: true,
     createdAt: '2026-01-16T12:00:00.000Z',
