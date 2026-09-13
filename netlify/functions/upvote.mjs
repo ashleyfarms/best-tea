@@ -4,22 +4,15 @@ function extractPlaceId(event) {
   const q = event.queryStringParameters || {};
   if (q.id) return String(q.id);
 
-  const candidates = [
-    event.path,
-    event.rawUrl,
-    event.headers?.['x-original-path'],
-    event.headers?.['x-forwarded-url'],
-    event.headers?.referer,
-  ].filter(Boolean);
+  const path = String(event.path || '');
+  const rawUrl = String(event.rawUrl || '');
+  const haystack = `${path} ${rawUrl}`;
 
-  for (const c of candidates) {
-    const m = String(c).match(
-      /\/places\/([^/?#]+)\/upvote|/upvote\/([^/?#]+)/,
-    );
-    if (m) return decodeURIComponent(m[1] || m[2]);
-  }
+  let m = haystack.match(/\/places\/([^/?\s#]+)\/upvote/);
+  if (m) return decodeURIComponent(m[1]);
+  m = haystack.match(/\/upvote\/([^/?\s#]+)/);
+  if (m) return decodeURIComponent(m[1]);
 
-  // Netlify may pass splat / path segments
   if (event.pathParameters?.id) return String(event.pathParameters.id);
   return '';
 }
@@ -32,14 +25,7 @@ export async function handler(event) {
 
     const id = extractPlaceId(event);
     if (!id) {
-      return json(400, {
-        error: 'place id is required',
-        debug: {
-          path: event.path,
-          rawUrl: event.rawUrl,
-          query: event.queryStringParameters || null,
-        },
-      });
+      return json(400, { error: 'place id is required' });
     }
 
     const sql = getSql();
