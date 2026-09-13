@@ -2,6 +2,8 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { AdSlot } from './AdSlot';
 import { HelpPalLink } from './HelpPalLink';
 
+const POSS_JONAH_HUB_URL = 'https://poss-jonah-hub.netlify.app';
+
 export function Layout() {
   return (
     <div className="app-shell">
@@ -36,6 +38,14 @@ export function Layout() {
             <NavLink to="/about" className="nav__link">
               About
             </NavLink>
+            <a
+              href={POSS_JONAH_HUB_URL}
+              className="nav__link nav__link--ext"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              More from Poss Jonah
+            </a>
           </nav>
         </div>
         <div className="site-header__scallop" aria-hidden="true" />
@@ -54,6 +64,19 @@ export function Layout() {
         <p className="site-footer__tag">
           Poss Jonah&apos;s guide to the best iced tea in the South.
           Positivity only — no worst lists, no paywalls.
+        </p>
+        <p className="help-pal-link">
+          <a
+            href={POSS_JONAH_HUB_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            More from Poss Jonah
+          </a>
+          {' · '}
+          <a href="https://best-pizza-poss-jonah.netlify.app" target="_blank" rel="noopener noreferrer">
+            Best Pizza
+          </a>
         </p>
         <HelpPalLink />
         <p className="site-footer__fine">
