@@ -28,8 +28,12 @@ export function Layout() {
             </NavLink>
           </nav>
         </div>
-        <AdSlot slot="header" />
       </header>
+
+      {/* Header ad lives below sticky nav so it doesn't kill the vibe */}
+      <div className="ad-band">
+        <AdSlot slot="header" />
+      </div>
 
       <main className="main">
         <Outlet />

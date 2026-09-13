@@ -6,6 +6,7 @@ type Props = {
 /**
  * AdSense-ready placeholder. Replace inner markup with real ad unit later.
  * Keep data-ad-slot attributes so ops can wire publisher IDs without redesign.
+ * Placeholders stay quiet so the site feels like a game first.
  */
 export function AdSlot({ slot, className = '' }: Props) {
   const label =
@@ -18,10 +19,8 @@ export function AdSlot({ slot, className = '' }: Props) {
       data-ad-slot={slot}
       data-ad-ready="placeholder"
     >
-      <span className="ad-slot__badge">Ad</span>
-      <span className="ad-slot__copy">
-        Ad space reserved ({slot}). Google AdSense can plug in here.
-      </span>
+      <span className="ad-slot__badge">Ad space</span>
+      <span className="ad-slot__copy">Reserved for a quiet sponsor.</span>
     </aside>
   );
 }

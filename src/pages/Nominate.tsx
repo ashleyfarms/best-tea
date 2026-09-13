@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import { PossJonah } from '../components/PossJonah';
 import { CITIES, cityLabel, getCity } from '../data/cities';
 import { getStore } from '../data/store';
 
 export function Nominate() {
   const [params] = useSearchParams();
   const preset = params.get('city') ?? '';
-  const navigate = useNavigate();
   const store = getStore();
 
   const [cityId, setCityId] = useState(preset && getCity(preset) ? preset : '');
@@ -15,6 +15,8 @@ export function Nominate() {
   const [address, setAddress] = useState('');
   const [note, setNote] = useState('');
   const [error, setError] = useState('');
+  const [doneCityId, setDoneCityId] = useState<string | null>(null);
+  const [doneName, setDoneName] = useState('');
 
   const cityOptions = useMemo(
     () =>
@@ -24,16 +26,18 @@ export function Nominate() {
     [],
   );
 
+  const doneCity = doneCityId ? getCity(doneCityId) : undefined;
+
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError('');
     const trimmed = name.trim();
     if (!cityId) {
-      setError('Please pick a city.');
+      setError('Please pick a city — Poss Jonah needs a town!');
       return;
     }
     if (!trimmed) {
-      setError('Place name is required.');
+      setError('What\'s the place called?');
       return;
     }
     if (note.trim().length > 280) {
@@ -48,16 +52,50 @@ export function Nominate() {
         address,
         note,
       });
-      navigate(`/city/${place.cityId}`, { replace: false });
+      setDoneCityId(place.cityId);
+      setDoneName(place.name);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not save nomination.');
     }
   }
 
+  if (doneCityId && doneCity) {
+    return (
+      <div className="page">
+        <div className="success-panel">
+          <PossJonah moment="success" />
+          <h1>You poured one out!</h1>
+          <p className="lede">
+            <strong>{doneName}</strong> is on the {cityLabel(doneCity)} board.
+            Poss Jonah tippin&apos; his hat to you.
+          </p>
+          <div className="cta-row">
+            <Link to={`/city/${doneCityId}`} className="btn btn--primary">
+              See {doneCity.name} rankings
+            </Link>
+            <button
+              type="button"
+              className="btn btn--ghost"
+              onClick={() => {
+                setDoneCityId(null);
+                setDoneName('');
+                setName('');
+                setAddress('');
+                setNote('');
+              }}
+            >
+              Nominate another
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page">
       <header className="page-head">
-        <h1>Nominate a spot</h1>
+        <h1>Pour one out</h1>
         <p className="lede">
           Share a place with great iced tea. Keep it positive — no roasting,
           no worst lists.
@@ -66,14 +104,14 @@ export function Nominate() {
 
       <form className="form" onSubmit={onSubmit} noValidate>
         <label className="field">
-          <span className="field__label">City *</span>
+          <span className="field__label">Which town? *</span>
           <select
             className="field__input"
             value={cityId}
             onChange={(e) => setCityId(e.target.value)}
             required
           >
-            <option value="">Select a city…</option>
+            <option value="">Pick a Southern city…</option>
             {cityOptions.map((c) => (
               <option key={c.id} value={c.id}>
                 {cityLabel(c)}
@@ -83,13 +121,13 @@ export function Nominate() {
         </label>
 
         <label className="field">
-          <span className="field__label">Place name *</span>
+          <span className="field__label">Where&apos;s the good tea? *</span>
           <input
             className="field__input"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. Central BBQ"
+            placeholder="e.g. Central BBQ, Aunt May's diner…"
             maxLength={120}
             required
             autoComplete="organization"
@@ -97,24 +135,24 @@ export function Nominate() {
         </label>
 
         <label className="field">
-          <span className="field__label">Address or area (optional)</span>
+          <span className="field__label">Neighborhood or street (optional)</span>
           <input
             className="field__input"
             type="text"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="Neighborhood or street"
+            placeholder="So folks can find that glass"
             maxLength={160}
           />
         </label>
 
         <label className="field">
-          <span className="field__label">Why it&apos;s great (optional)</span>
+          <span className="field__label">Why it&apos;s a winner (optional)</span>
           <textarea
             className="field__input field__input--area"
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            placeholder="Short, positive note — sweetness, chill, glass size…"
+            placeholder="Sweetness, chill, glass size, porch vibes…"
             maxLength={280}
             rows={4}
           />
@@ -129,7 +167,7 @@ export function Nominate() {
 
         <div className="cta-row">
           <button type="submit" className="btn btn--primary">
-            Submit nomination
+            🍵 Add to the board
           </button>
           <Link to={cityId ? `/city/${cityId}` : '/cities'} className="btn btn--ghost">
             Cancel
