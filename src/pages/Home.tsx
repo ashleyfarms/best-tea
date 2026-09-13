@@ -7,6 +7,15 @@ export function Home() {
       <PossJonah moment="home" />
 
       <section className="hero hero--big">
+        <div className="hero__mascot">
+          <img
+            src="/poss-jonah-logo.png"
+            alt="Poss Jonah"
+            className="hero__mascot-img"
+            width={132}
+            height={132}
+          />
+        </div>
         <p className="eyebrow">Poss Jonah says</p>
         <h1>Best iced tea in the South</h1>
         <div className="prose opening-copy">
