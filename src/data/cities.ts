@@ -22,6 +22,18 @@ export const CITIES: City[] = [
   { id: 'jackson-ms', name: 'Jackson', state: 'Mississippi', stateAbbr: 'MS' },
   { id: 'oxford-ms', name: 'Oxford', state: 'Mississippi', stateAbbr: 'MS' },
   { id: 'richmond-va', name: 'Richmond', state: 'Virginia', stateAbbr: 'VA' },
+  { id: 'jacksonville-fl', name: 'Jacksonville', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'miami-fl', name: 'Miami', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'tampa-fl', name: 'Tampa', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'orlando-fl', name: 'Orlando', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'tallahassee-fl', name: 'Tallahassee', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'pensacola-fl', name: 'Pensacola', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'houston-tx', name: 'Houston', state: 'Texas', stateAbbr: 'TX' },
+  { id: 'dallas-tx', name: 'Dallas', state: 'Texas', stateAbbr: 'TX' },
+  { id: 'austin-tx', name: 'Austin', state: 'Texas', stateAbbr: 'TX' },
+  { id: 'san-antonio-tx', name: 'San Antonio', state: 'Texas', stateAbbr: 'TX' },
+  { id: 'fort-worth-tx', name: 'Fort Worth', state: 'Texas', stateAbbr: 'TX' },
+  { id: 'el-paso-tx', name: 'El Paso', state: 'Texas', stateAbbr: 'TX' },
 ];
 
 export function getCity(id: string): City | undefined {

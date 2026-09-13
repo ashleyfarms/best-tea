@@ -47,27 +47,27 @@ export function Home() {
       </section>
 
       <section className="how-steps" aria-label="How it works">
-        <div className="how-step how-step--sky">
+        <Link to="/cities" className="how-step how-step--sky">
           <span className="how-step__icon" aria-hidden="true">
             🗺️
           </span>
           <h2>Pick a city</h2>
-          <p>Browse Southern towns from Memphis to Charleston and beyond.</p>
-        </div>
-        <div className="how-step how-step--pink">
+          <p>Browse Southern towns from Memphis to Miami, Houston, and beyond.</p>
+        </Link>
+        <Link to="/cities" className="how-step how-step--pink">
           <span className="how-step__icon" aria-hidden="true">
             👍
           </span>
           <h2>Cheer the best</h2>
           <p>One tap. No downvotes. Only the good stuff rises.</p>
-        </div>
-        <div className="how-step how-step--mint">
+        </Link>
+        <Link to="/nominate" className="how-step how-step--mint">
           <span className="how-step__icon" aria-hidden="true">
             🍯
           </span>
           <h2>Nominate kindly</h2>
           <p>Share a place and a short positive note. Keep it sweet.</p>
-        </div>
+        </Link>
       </section>
     </div>
   );

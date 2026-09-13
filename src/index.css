@@ -518,6 +518,21 @@ img {
   }
 }
 
+a.how-step {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a.how-step:hover {
+  color: inherit;
+}
+
+a.how-step:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 3px;
+}
+
 .how-step {
   text-align: center;
   padding: 1.15rem 0.95rem;
