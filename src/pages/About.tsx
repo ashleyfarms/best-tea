@@ -20,6 +20,12 @@ export function About() {
           service matters. Food counts. But if the tea is bad? Forget it.
         </p>
         <p>
+          Poss Jonah is our mascot: a tough opossum in plaid, fedora, and
+          work boots, leaning on a lamppost with a wheat stem in his teeth.
+          He hosts this hunt — no cowboy-emoji stand-in, just the real
+          possum tipping his hat when the tea is honest.
+        </p>
+        <p>
           Best Tea is free, user-driven, and positivity-only. Hunt the best
           glass by city, cheer your favorites, and nominate spots you love —
           no worst lists, no subscriptions.

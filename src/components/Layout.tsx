@@ -9,7 +9,11 @@ export function Layout() {
         <div className="site-header__inner">
           <Link to="/" className="brand" aria-label="Best Tea home">
             <span className="brand__mark" aria-hidden="true">
-              🍵
+              <img
+                src="/poss-jonah-logo.png"
+                alt=""
+                className="brand__logo"
+              />
             </span>
             <span className="brand__text">
               <span className="brand__name">Best Tea</span>

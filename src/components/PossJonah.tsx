@@ -40,7 +40,7 @@ function pickQuip(moment: PossMoment): string {
   return list[i] ?? list[0];
 }
 
-/** Friendly host strip — CSS/emoji illustration + Southern speech bubble */
+/** Friendly host strip — Poss Jonah mascot + Southern speech bubble */
 export function PossJonah({ moment, line, className = '' }: Props) {
   const quip = useMemo(() => line ?? pickQuip(moment), [moment, line]);
 
@@ -49,10 +49,7 @@ export function PossJonah({ moment, line, className = '' }: Props) {
       className={`poss ${className}`.trim()}
       aria-label="Poss Jonah says"
     >
-      <div className="poss__avatar" aria-hidden="true">
-        <span className="poss__face">🤠</span>
-        <span className="poss__tea">🍵</span>
-      </div>
+      <img src="/poss-jonah-logo.png" alt="" className="poss__logo" />
       <div className="poss__bubble">
         <p className="poss__name">Poss Jonah</p>
         <p className="poss__line">{quip}</p>

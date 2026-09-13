@@ -3,7 +3,7 @@
   --cream-deep: #efe2c8;
   --brown: #8b5a2b;
   --brown-soft: #a67c52;
-  --brown-ink: #3f2a1a;
+  --brown-ink: #1a120c;
   --amber: #c47a2c;
   --amber-bright: #e09435;
   --amber-rich: #b86a1a;
@@ -13,14 +13,14 @@
   --silver: #c5c8ce;
   --bronze: #c48a5a;
   --white: #fffdf8;
-  --muted: #6b5340;
+  --muted: #4a3728;
   --border: #e0d0b4;
-  --shadow: 0 8px 24px rgba(63, 42, 26, 0.08);
+  --shadow: 0 8px 24px rgba(26, 18, 12, 0.1);
   --radius: 16px;
   --tap: 48px;
   --display: "Segoe UI", system-ui, -apple-system, sans-serif;
   font-family: var(--display);
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--brown-ink);
   background: var(--cream);
   font-synthesis: none;
@@ -48,15 +48,15 @@ body {
       90deg,
       transparent,
       transparent 47px,
-      rgba(196, 122, 44, 0.035) 47px,
-      rgba(196, 122, 44, 0.035) 48px
+      rgba(196, 122, 44, 0.02) 47px,
+      rgba(196, 122, 44, 0.02) 48px
     ),
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 47px,
-      rgba(196, 122, 44, 0.035) 47px,
-      rgba(196, 122, 44, 0.035) 48px
+      rgba(196, 122, 44, 0.02) 47px,
+      rgba(196, 122, 44, 0.02) 48px
     ),
     var(--cream);
 }
@@ -111,15 +111,23 @@ img {
 }
 
 .brand__mark {
-  font-size: 1.75rem;
-  line-height: 1;
-  background: linear-gradient(145deg, var(--amber-pale), #f6c88a);
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 42px;
+  height: 42px;
   display: grid;
   place-items: center;
-  border-radius: 14px;
-  box-shadow: inset 0 -2px 0 rgba(139, 90, 43, 0.12);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.brand__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
 .brand__text {
@@ -131,7 +139,7 @@ img {
 .brand__name {
   font-weight: 800;
   font-size: 1.25rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
 }
 
 .brand__by {
@@ -154,8 +162,8 @@ img {
   border-radius: 999px;
   text-decoration: none;
   color: var(--brown-ink);
-  font-weight: 600;
-  font-size: 0.92rem;
+  font-weight: 700;
+  font-size: 1rem;
   background: transparent;
 }
 
@@ -189,7 +197,7 @@ img {
   margin: 0.25rem 0 0.65rem;
   font-size: clamp(1.9rem, 5.5vw, 2.6rem);
   line-height: 1.12;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.02em;
   font-weight: 850;
   color: var(--brown-ink);
 }
@@ -197,61 +205,42 @@ img {
 .eyebrow {
   margin: 0;
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--amber-rich);
+  letter-spacing: 0.05em;
+  color: var(--brown-ink);
 }
 
 .lede {
   margin: 0;
   color: var(--muted);
-  font-size: 1.05rem;
+  font-size: 1.2rem;
+  line-height: 1.65;
 }
 
 /* —— Poss Jonah host —— */
 .poss {
   display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.85rem;
   margin: 0 0 1.25rem;
   padding: 0.85rem 1rem;
-  background: linear-gradient(135deg, #fff9ef, #fff3dc);
-  border: 1px solid var(--amber-pale);
+  background: var(--white);
+  border: 1px solid var(--border);
   border-radius: calc(var(--radius) + 2px);
-  box-shadow: 0 4px 14px rgba(196, 122, 44, 0.1);
+  box-shadow: var(--shadow);
 }
 
-.poss__avatar {
-  position: relative;
+.poss__logo {
   flex-shrink: 0;
-  width: 3.4rem;
-  height: 3.4rem;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(circle at 40% 35%, #ffe7b8, var(--amber-pale));
-  border-radius: 50%;
-  border: 2px solid var(--gold-edge);
-  box-shadow: 0 3px 0 rgba(139, 90, 43, 0.12);
-}
-
-.poss__face {
-  font-size: 1.85rem;
-  line-height: 1;
-}
-
-.poss__tea {
-  position: absolute;
-  right: -0.2rem;
-  bottom: -0.15rem;
-  font-size: 0.95rem;
+  width: 68px;
+  height: 68px;
+  object-fit: contain;
+  object-position: center;
   background: var(--white);
   border-radius: 50%;
-  width: 1.35rem;
-  height: 1.35rem;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 1px 3px rgba(63, 42, 26, 0.15);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 0 rgba(26, 18, 12, 0.06);
 }
 
 .poss__bubble {
@@ -260,18 +249,18 @@ img {
 }
 
 .poss__name {
-  margin: 0 0 0.15rem;
-  font-size: 0.78rem;
+  margin: 0 0 0.2rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--amber-rich);
+  color: var(--brown-ink);
 }
 
 .poss__line {
   margin: 0;
-  font-size: 1.02rem;
-  line-height: 1.4;
+  font-size: 1.15rem;
+  line-height: 1.55;
   color: var(--brown-ink);
 }
 
@@ -288,34 +277,21 @@ img {
 
 .hero--big {
   padding: 1.55rem 1.3rem 1.7rem;
-  background:
-    radial-gradient(ellipse at 100% 0%, rgba(232, 184, 74, 0.18), transparent 45%),
-    radial-gradient(ellipse at 0% 100%, rgba(240, 211, 168, 0.35), transparent 40%),
-    var(--white);
-  border-color: var(--amber-pale);
-}
-
-.hero--big::after {
-  content: "";
-  position: absolute;
-  inset: auto 1rem 0.65rem auto;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(196, 122, 44, 0.12), transparent 70%);
-  pointer-events: none;
+  background: var(--white);
 }
 
 .prose p,
 .opening-copy p {
   margin: 0 0 1rem;
-  font-size: 1.05rem;
+  font-size: 1.22rem;
+  line-height: 1.65;
+  color: var(--brown-ink);
 }
 
 .opening-copy__ask {
   font-weight: 700;
-  color: var(--brown);
-  font-size: 1.15rem !important;
+  color: var(--brown-ink);
+  font-size: 1.25rem !important;
 }
 
 .cta-row {
@@ -333,8 +309,8 @@ img {
   padding: 0.7rem 1.2rem;
   border-radius: 999px;
   border: 2px solid transparent;
-  font-weight: 700;
-  font-size: 1rem;
+  font-weight: 800;
+  font-size: 1.05rem;
   text-decoration: none;
   cursor: pointer;
   font-family: inherit;
@@ -358,8 +334,8 @@ img {
 }
 
 .btn--ghost {
-  background: transparent;
-  color: var(--brown);
+  background: var(--white);
+  color: var(--brown-ink);
   border-color: var(--border);
 }
 
@@ -403,13 +379,16 @@ img {
 
 .how-step h2 {
   margin: 0 0 0.35rem;
-  font-size: 1.08rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--brown-ink);
 }
 
 .how-step p {
   margin: 0;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
 }
 
 /* Featured Memphis + city board */
@@ -423,8 +402,8 @@ img {
   gap: 0.75rem;
   margin-top: 0.45rem;
   padding: 0.95rem 1.1rem;
-  background: linear-gradient(120deg, #fff8ec, #ffe9c4);
-  border: 2px solid var(--gold-edge);
+  background: var(--white);
+  border: 2px solid var(--border);
   border-radius: var(--radius);
   text-decoration: none;
   color: var(--brown-ink);
@@ -444,8 +423,8 @@ img {
 
 .featured-city__text {
   flex: 1;
-  font-size: 1rem;
-  line-height: 1.3;
+  font-size: 1.1rem;
+  line-height: 1.4;
 }
 
 .featured-city__text strong {
@@ -455,7 +434,7 @@ img {
 .featured-city__go {
   font-size: 1.35rem;
   font-weight: 800;
-  color: var(--amber-rich);
+  color: var(--brown-ink);
 }
 
 .state-groups {
@@ -514,12 +493,12 @@ img {
 .city-chip:hover {
   border-color: var(--amber);
   background: #fff8ec;
-  color: var(--brown);
+  color: var(--brown-ink);
   transform: translateY(-4px) scale(1.03);
 }
 
 .city-chip__tea {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1;
 }
 
@@ -556,18 +535,18 @@ img {
 }
 
 .place-card--gold {
-  background: linear-gradient(145deg, #fff9e8, #fff);
+  background: var(--white);
   border-color: var(--gold-edge);
-  box-shadow: 0 8px 22px rgba(201, 150, 42, 0.18);
+  box-shadow: 0 8px 22px rgba(26, 18, 12, 0.08);
 }
 
 .place-card--silver {
-  background: linear-gradient(145deg, #f4f5f7, #fff);
+  background: var(--white);
   border-color: #b8bcc4;
 }
 
 .place-card--bronze {
-  background: linear-gradient(145deg, #faf0e6, #fff);
+  background: var(--white);
   border-color: #c9a07a;
 }
 
@@ -588,20 +567,22 @@ img {
 
 .place-card__name {
   margin: 0 0 0.25rem;
-  font-size: 1.12rem;
+  font-size: 1.2rem;
   font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--brown-ink);
 }
 
 .place-card__meta {
   margin: 0 0 0.35rem;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 .place-card__note {
   margin: 0.45rem 0 0;
   padding: 0.55rem 0.75rem;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-style: italic;
   color: var(--brown-ink);
   background: var(--cream);
@@ -612,11 +593,11 @@ img {
 .place-card__badge {
   display: inline-block;
   margin-top: 0.55rem;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 800;
   letter-spacing: 0.03em;
-  background: #fff3dc;
-  color: var(--amber-rich);
+  background: var(--cream-deep);
+  color: var(--brown-ink);
   padding: 0.25rem 0.55rem;
   border-radius: 999px;
   border: 1px solid var(--amber-pale);
@@ -633,15 +614,15 @@ img {
   padding: 0.5rem 0.55rem;
   border-radius: 16px;
   border: 2px solid var(--amber);
-  background: linear-gradient(180deg, #fff8ec, #ffe9c4);
-  color: var(--brown);
+  background: var(--white);
+  color: var(--brown-ink);
   cursor: pointer;
   font-family: inherit;
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .vote-btn:hover:not(:disabled) {
-  background: linear-gradient(180deg, #ffe9c4, var(--amber-pale));
+  background: var(--cream);
   transform: translateY(-2px);
 }
 
@@ -682,10 +663,11 @@ img {
 }
 
 .vote-btn__label {
-  font-size: 0.68rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.03em;
+  color: inherit;
 }
 
 .vote-toast {
@@ -703,7 +685,7 @@ img {
   font-weight: 700;
   font-size: 0.95rem;
   border-radius: 999px;
-  box-shadow: 0 10px 28px rgba(63, 42, 26, 0.35);
+  box-shadow: 0 10px 28px rgba(26, 18, 12, 0.35);
   animation: toast-in 0.35s ease;
   max-width: calc(100vw - 2rem);
 }
@@ -818,12 +800,16 @@ img {
 
 .about .prose h2 {
   margin: 1.5rem 0 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  color: var(--brown-ink);
 }
 
 .about .prose ul {
   padding-left: 1.2rem;
-  color: var(--muted);
+  color: var(--brown-ink);
+  font-size: 1.15rem;
+  line-height: 1.65;
 }
 
 /* Quiet ads — game first */
@@ -881,7 +867,8 @@ img {
 
 .site-footer__tag {
   margin: 0 0 0.75rem;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  line-height: 1.65;
 }
 
 .site-footer__fine {
