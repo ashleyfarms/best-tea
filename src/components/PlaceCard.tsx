@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Place } from '../data/types';
+import { TeaGlass } from './TeaGlass';
 
 type Props = {
   place: Place;
@@ -61,7 +62,7 @@ export function PlaceCard({ place, rank, hasVoted, onUpvote }: Props) {
         }
       >
         <span className="vote-btn__icon" aria-hidden="true">
-          {hasVoted ? '✓' : '🍵'}
+          {hasVoted ? '✓' : <TeaGlass size={22} />}
         </span>
         <span className="vote-btn__count">{place.votes}</span>
         <span className="vote-btn__label">

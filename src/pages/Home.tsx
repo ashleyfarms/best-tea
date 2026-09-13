@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PossJonah } from '../components/PossJonah';
+import { TeaGlass } from '../components/TeaGlass';
 
 export function Home() {
   return (
@@ -7,6 +8,11 @@ export function Home() {
       <PossJonah moment="home" />
 
       <section className="hero hero--big">
+        <div className="hero__stickers" aria-hidden="true">
+          <span className="sticker sticker--lemon">🍋</span>
+          <span className="sticker sticker--ice">🧊</span>
+          <span className="sticker sticker--sparkle">✨</span>
+        </div>
         <div className="hero__mascot">
           <img
             src="/poss-jonah-logo.png"
@@ -32,7 +38,7 @@ export function Home() {
         </div>
         <div className="cta-row">
           <Link to="/cities" className="btn btn--primary">
-            🍵 Hunt the best glass
+            <TeaGlass size={22} className="btn__tea" /> Hunt the best glass
           </Link>
           <Link to="/nominate" className="btn btn--ghost">
             Pour one out for good tea
@@ -41,21 +47,21 @@ export function Home() {
       </section>
 
       <section className="how-steps" aria-label="How it works">
-        <div className="how-step">
+        <div className="how-step how-step--sky">
           <span className="how-step__icon" aria-hidden="true">
             🗺️
           </span>
           <h2>Pick a city</h2>
           <p>Browse Southern towns from Memphis to Charleston and beyond.</p>
         </div>
-        <div className="how-step">
+        <div className="how-step how-step--pink">
           <span className="how-step__icon" aria-hidden="true">
             👍
           </span>
           <h2>Cheer the best</h2>
           <p>One tap. No downvotes. Only the good stuff rises.</p>
         </div>
-        <div className="how-step">
+        <div className="how-step how-step--mint">
           <span className="how-step__icon" aria-hidden="true">
             🍯
           </span>

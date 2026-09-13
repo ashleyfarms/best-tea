@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import type { FormEvent } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { PossJonah } from '../components/PossJonah';
+import { TeaGlass } from '../components/TeaGlass';
 import { CITIES, cityLabel, getCity } from '../data/cities';
 import { getStore } from '../data/store';
 
@@ -167,7 +168,7 @@ export function Nominate() {
 
         <div className="cta-row">
           <button type="submit" className="btn btn--primary">
-            🍵 Add to the board
+            <TeaGlass size={22} className="btn__tea" /> Add to the board
           </button>
           <Link to={cityId ? `/city/${cityId}` : '/cities'} className="btn btn--ghost">
             Cancel

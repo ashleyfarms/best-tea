@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PossJonah } from '../components/PossJonah';
+import { TeaGlass } from '../components/TeaGlass';
 import { getCity, groupCitiesByState } from '../data/cities';
 
 export function Cities() {
@@ -22,7 +23,7 @@ export function Cities() {
           <p className="eyebrow">Quick pick</p>
           <Link to={`/city/${memphis.id}`} className="featured-city__card">
             <span className="featured-city__icon" aria-hidden="true">
-              🍵
+              <TeaGlass size={36} />
             </span>
             <span className="featured-city__text">
               <strong>{memphis.name}</strong>
@@ -47,7 +48,7 @@ export function Cities() {
                 <li key={city.id}>
                   <Link to={`/city/${city.id}`} className="city-chip">
                     <span className="city-chip__tea" aria-hidden="true">
-                      🍵
+                      <TeaGlass size={20} />
                     </span>
                     <span>
                       {city.name}

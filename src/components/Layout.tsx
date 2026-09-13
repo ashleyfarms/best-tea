@@ -5,7 +5,13 @@ import { HelpPalLink } from './HelpPalLink';
 export function Layout() {
   return (
     <div className="app-shell">
+      <div className="confetti confetti--tl" aria-hidden="true" />
+      <div className="confetti confetti--tr" aria-hidden="true" />
+      <div className="confetti confetti--bl" aria-hidden="true" />
+      <div className="confetti confetti--br" aria-hidden="true" />
+
       <header className="site-header">
+        <div className="site-header__bunting" aria-hidden="true" />
         <div className="site-header__inner">
           <Link to="/" className="brand" aria-label="Best Tea home">
             <span className="brand__mark" aria-hidden="true">
@@ -32,6 +38,7 @@ export function Layout() {
             </NavLink>
           </nav>
         </div>
+        <div className="site-header__scallop" aria-hidden="true" />
       </header>
 
       {/* Header ad lives below sticky nav so it doesn't kill the vibe */}

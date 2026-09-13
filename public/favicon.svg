@@ -1,7 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect width="64" height="64" rx="14" fill="#F5E6C8"/>
-  <path d="M18 22h22c2 0 4 2 4 5v14c0 6-5 11-11 11H25c-6 0-11-5-11-11V27c0-3 2-5 4-5z" fill="#C47A2C"/>
-  <path d="M44 28h4c3 0 5 2 5 5v4c0 3-2 5-5 5h-4" stroke="#8B5A2B" stroke-width="3" stroke-linecap="round"/>
-  <ellipse cx="29" cy="20" rx="8" ry="3" fill="#E8D4A8"/>
-  <path d="M24 12c2 3 2 6 0 8M29 10c2 4 2 8 0 10M34 12c2 3 2 6 0 8" stroke="#8B5A2B" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+  <rect width="64" height="64" rx="14" fill="#EAF6FF"/>
+  <!-- Tall glass -->
+  <path d="M18 8h28l-3.2 42c-.35 5-4.4 8.5-9 8.5H30.2c-4.6 0-8.65-3.5-9-8.5L18 8z" fill="#FFF8EE" stroke="#5B7FD6" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Amber tea -->
+  <path d="M20.5 22h23l-2.5 30.5c-.25 3.2-3 5.5-6 5.5h-6c-3 0-5.75-2.3-6-5.5L20.5 22z" fill="#FF8F3D"/>
+  <ellipse cx="32" cy="22" rx="11.2" ry="2.4" fill="#FFD08A"/>
+  <!-- Ice -->
+  <rect x="23" y="25" width="8" height="6.5" rx="1" fill="#E8F6FF" stroke="#9EC9EF" stroke-width=".8" transform="rotate(-8 27 28.25)"/>
+  <rect x="33" y="27" width="7.5" height="6" rx="1" fill="#F0FBFF" stroke="#9EC9EF" stroke-width=".8" transform="rotate(10 36.75 30)"/>
+  <!-- Lemon -->
+  <g transform="translate(40 4) rotate(25)">
+    <path d="M0 6 A8 8 0 0 1 12 6 L6 12 Z" fill="#FFE566" stroke="#E8B020" stroke-width="1"/>
+  </g>
+  <!-- Highlight -->
+  <path d="M23 14c0 0 1 16 .8 28" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".4"/>
 </svg>

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { AdSlot } from '../components/AdSlot';
 import { PlaceCard } from '../components/PlaceCard';
 import { PossJonah } from '../components/PossJonah';
+import { TeaGlass } from '../components/TeaGlass';
 import { VoteToast } from '../components/VoteToast';
 import { cityLabel, getCity } from '../data/cities';
 import { getStore } from '../data/store';
@@ -88,8 +89,8 @@ export function CityPage() {
         <p className="eyebrow">
           <Link to="/cities">Cities</Link> / {city.stateAbbr}
         </p>
-        <h1>
-          <span aria-hidden="true">🍵 </span>
+        <h1 className="city-title">
+          <TeaGlass size={36} className="city-title__glass" />
           Best tea in {cityLabel(city)}
         </h1>
         <p className="lede">

@@ -1,3 +1,5 @@
+import { TeaGlass } from './TeaGlass';
+
 type Props = {
   message: string;
   visible: boolean;
@@ -8,7 +10,7 @@ export function VoteToast({ message, visible }: Props) {
   if (!visible) return null;
   return (
     <div className="vote-toast" role="status" aria-live="polite">
-      <span aria-hidden="true">🍵</span>
+      <TeaGlass size={22} />
       <span>{message}</span>
     </div>
   );
