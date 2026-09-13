@@ -41,7 +41,7 @@ export function Home() {
             <TeaGlass size={22} className="btn__tea" /> Hunt the best glass
           </Link>
           <Link to="/nominate" className="btn btn--ghost">
-            Pour one out for good tea
+            Tell us your favorite tea!
           </Link>
         </div>
       </section>

@@ -96,7 +96,7 @@ export function Nominate() {
   return (
     <div className="page">
       <header className="page-head">
-        <h1>Pour one out</h1>
+        <h1>Tell us your favorite tea!</h1>
         <p className="lede">
           Share a place with great iced tea. Keep it positive — no roasting,
           no worst lists.

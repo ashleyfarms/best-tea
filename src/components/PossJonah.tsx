@@ -7,7 +7,7 @@ const QUIPS = {
     "Sweet, cold, and honest — that's how we measure a place.",
   ],
   empty: [
-    "This town's glass is still empty. Be the first to pour one out!",
+    "This town's glass is still empty. Tell us your favorite tea!",
     "No tea tales yet — your nomination could start the whole picnic.",
     "Quiet as a porch at dawn. Got a favorite spot to share?",
   ],
