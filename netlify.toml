@@ -7,6 +7,13 @@
   node_bundler = "esbuild"
 
 # Shared places API (Neon) — force ahead of SPA fallback
+# Permanent hostname redirect: netlify.app -> clean custom domain
+[[redirects]]
+  from = "https://best-tea-poss-jonah.netlify.app/*"
+  to = "https://tea.possjonah.com/:splat"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"

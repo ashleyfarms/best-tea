@@ -24,6 +24,7 @@ export const CITIES: City[] = [
   { id: 'richmond-va', name: 'Richmond', state: 'Virginia', stateAbbr: 'VA' },
   { id: 'jacksonville-fl', name: 'Jacksonville', state: 'Florida', stateAbbr: 'FL' },
   { id: 'miami-fl', name: 'Miami', state: 'Florida', stateAbbr: 'FL' },
+  { id: 'fort-lauderdale-fl', name: 'Fort Lauderdale', state: 'Florida', stateAbbr: 'FL' },
   { id: 'tampa-fl', name: 'Tampa', state: 'Florida', stateAbbr: 'FL' },
   { id: 'orlando-fl', name: 'Orlando', state: 'Florida', stateAbbr: 'FL' },
   { id: 'tallahassee-fl', name: 'Tallahassee', state: 'Florida', stateAbbr: 'FL' },
